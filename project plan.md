@@ -6,7 +6,8 @@ It has a web interface from which the user can control:
 - toggling the system on or off
 - how many liters of water gets pumped each time the pump is turned on  
 - how often the moisture sensor is read
-It also has a database that has time series data about when the water pump was turned on
+The web interface should also have a login functionality, especially if it uses HTTPS protocol
+The system also has a database that has time series data about when the water pump was turned on  
 
 ## Raspberry Pi
 Docker Containers:  
