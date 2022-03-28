@@ -1,0 +1,48 @@
+version: "3.9"
+   
+services:
+  django:
+    build:
+      context: ./django
+    volumes:
+      - ./django:/django
+      - static:/static
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    image: django:water_world_gunicorn
+    container_name: water_world_gunicorn_server
+    command: gunicorn water_world_server.wsgi:application --bind 0.0.0.0:8000
+    restart: always
+  
+  mqtt:
+    build:
+      context: ./mosquitto
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    image: mqtt:water_world_server
+    container_name: water_world_mqtt_server
+    restart: always
+
+  web:
+    build:
+      context: ./nginx
+    volumes:
+      - static:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+    image: nginx:water_world_web_server
+    container_name: water_world_nginx_server
+    restart: always
+
+volumes:
+  static:
+    
