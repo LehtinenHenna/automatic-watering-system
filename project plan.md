@@ -22,6 +22,8 @@ https://www.velleman.eu/products/view/?id=459186
 ## Water sensor
 https://components101.com/modules/soil-moisture-sensor-module  
 
+## Water pump
+hexagon is input, circle is output  
 
 ## Extra
 Ideas to develop the system in case we have extra time
