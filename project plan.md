@@ -7,9 +7,16 @@ The project is about creating an automatic plant watering system that runs on Ra
 Web interface from which the user can control:  
 - toggling the system on or off
 - how many liters of water gets pumped each time the pump is turned on  
-- how often the moisture sensor is read
-The web interface should also have a login functionality, especially if it uses HTTPS protocol
-The system also has a database that has time series data about when the water pump was turned on  
+- how often the moisture sensor is read 
+
+## MongoDB database
+- water pump table that has columns:  
+  - timestamp of when the pump was turned on  
+  - timestamp of when the pump was turned off  
+- variables table that has columns:
+  - how many hours in between sensor readings
+  - system enable variable (true or false) that defines if the moisture sensor gets read or not (and therefore if the water pump gets turned on or not)
+  - how many seconds the water pump is turned on for (django converts liters to seconds)  
 
 ## Raspberry Pi
 Docker Containers:  
