@@ -1,8 +1,10 @@
 # Project Plan
 
 ## General
-The project is about creating an automatic plant watering system that runs on Raspberry Pi.  
-It has a web interface from which the user can control:  
+The project is about creating an automatic plant watering system that runs on Raspberry Pi. It reads a digital moisture sensor and when the soil is dry it starts a water pump for n seconds. It saves the timestamp information to MongoDB database of when the pump was turned on. The web server is accessed via tailscaled.  
+
+## Django web server
+Web interface from which the user can control:  
 - toggling the system on or off
 - how many liters of water gets pumped each time the pump is turned on  
 - how often the moisture sensor is read
