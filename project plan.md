@@ -17,14 +17,16 @@ Docker Containers:
 
 Software:  
   - Tailscale SDWAN VPN  
+  
+## Components  
 
-## Motor
+### Motor
 https://www.velleman.eu/products/view/?id=459186  
 
-## Water sensor
+### Water sensor
 https://components101.com/modules/soil-moisture-sensor-module  
 
-## Water pump
+### Water pump
 hexagon is input, circle is output  
 
 ## Extra
