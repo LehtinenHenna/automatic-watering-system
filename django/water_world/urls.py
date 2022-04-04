@@ -8,5 +8,6 @@ from . import views
 app_name = "water_world"
 
 urlpatterns = [
-
+    # /water_world/
+    path("", views.IndexView.as_view(), name="index"),
 ]
