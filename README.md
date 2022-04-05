@@ -4,10 +4,46 @@
 Automatic watering system utilizing Raspberry Pi 4, soil moisture sensor and a water pump.
 
 ## Dependencies
-List dependencies.
+    sudo apt install apt-transport-https libffi-dev libssl-dev python3-dev python3-pip
 
-## Installation
-List docker-compose commands.
+## Installing Tailscale
+Add Tailscale's package signing key and repository:
+
+    curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.gpg | sudo apt-key add -
+    curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+
+Install Tailscale:
+
+    sudo apt update && sudo apt install tailscale
+
+Authenticate and connect your machine to your Tailscale network:
+
+    sudo tailscale up
+
+View your Tailscale IPv4 address:
+
+    tailscale ip -4
+
+## Installing Docker and Docker Compose
+Download Docker installation script for Linux distributions:
+
+    curl -fsSL https://get.docker.com -o get-docker.sh
+
+Inspect and run the script file:
+
+    sudo sh get-docker.sh
+
+Add your user to docker group to run docker without root:
+
+    sudo usermod -aG docker pi
+
+Install Docker Compose:
+
+    sudo pip3 install docker-compose
+
+Enable the Docker system service to start your containers on boot:
+
+    sudo systemctl enable docker
 
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
