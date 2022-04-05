@@ -1,6 +1,17 @@
 version: "3.9"
    
 services:
+  db:
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    image: postgres:14.2-alpine
+    container_name: water_world_db
+    restart: unless-stopped
+
   django:
     build:
       context: ./django
@@ -44,5 +55,7 @@ services:
     restart: always
 
 volumes:
+  db:
+    driver: local
   static:
     
