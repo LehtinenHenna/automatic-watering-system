@@ -19,6 +19,8 @@ that replace the %s instances in the query, e.g.
     "columns": ["liters_per_minute", "hours_between_sensor_reads"],
     "values": [10, 2]
 }
+note: use SQL("INSERT INTO table1 {} VALUES (%s)").format(sql.Identifier('column1')),
+    [10, 20])
 '''
 #!/usr/bin/env python3
 import paho.mqtt.client as mqtt
@@ -29,6 +31,7 @@ from dotenv import load_dotenv
 import os
 from socket import gethostname
 from traceback import format_exc
+from psycopg2 import sql
 
 
 def on_connect(client, userdata, flags, rc):
@@ -50,6 +53,12 @@ def on_message(client, userdata, msg):
         try:
             query = data['query']
 
+            insertion = sql.SQL(
+                "insert into {table} {columns} values {values}").format(
+                    table = sql.Identifier('people'), 
+                    column = sql.Identifier(data['column']).as_string(connection),
+                    values = sql.Identifier(data['values']).as_string(connection)
+                )
 
 
             cursor.execute(insertion)
