@@ -54,7 +54,7 @@ Build images:
 
 Run the containers up:
 
-    docker-compose up
+    docker-compose up -d
 
 To update your changes to the containers, you need to run the containers down:
 
