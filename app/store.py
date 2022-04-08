@@ -21,6 +21,7 @@ that replace the %s instances in the query, e.g.
 }
 note: use SQL("INSERT INTO table1 {} VALUES (%s)").format(sql.Identifier('column1')),
     [10, 20])
+postgres is running on port 5432
 '''
 #!/usr/bin/env python3
 import paho.mqtt.client as mqtt
