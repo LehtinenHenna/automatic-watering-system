@@ -5,7 +5,7 @@ services:
     build:
       context: ./app
     volumes:
-      - ./app:app
+      - ./app:/app
     image: app:water_world
     container_name: water_world_app
     command: python main.py
@@ -16,8 +16,10 @@ services:
       - db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    env_file:
-      - .env
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     image: postgres:14.2-alpine
     container_name: water_world_db
     restart: unless-stopped
@@ -30,6 +32,8 @@ services:
       - static:/static
     ports:
       - "8000:8000"
+    depends_on:
+      - db
     env_file:
       - .env
     image: django:water_world_gunicorn
@@ -66,6 +70,5 @@ services:
 
 volumes:
   db:
-    driver: local
   static:
     
