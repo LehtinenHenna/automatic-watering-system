@@ -1,6 +1,16 @@
 version: "3.9"
    
 services:
+  app:
+    build:
+      context: ./app
+    volumes:
+      - ./app:app
+    image: app:water_world
+    container_name: water_world_app
+    command: python main.py
+    restart: unless-stopped
+  
   db:
     volumes:
       - db:/var/lib/postgresql/data
@@ -25,7 +35,7 @@ services:
     image: django:water_world_gunicorn
     container_name: water_world_gunicorn_server
     command: gunicorn water_world_server.wsgi:application --bind 0.0.0.0:8000
-    restart: always
+    restart: unless-stopped
   
   mqtt:
     build:
@@ -39,7 +49,7 @@ services:
       - "9001:9001"
     image: mqtt:water_world_server
     container_name: water_world_mqtt_server
-    restart: always
+    restart: unless-stopped
 
   web:
     build:
@@ -52,7 +62,7 @@ services:
       - django
     image: nginx:water_world_web_server
     container_name: water_world_nginx_server
-    restart: always
+    restart: unless-stopped
 
 volumes:
   db:
