@@ -45,6 +45,23 @@ Enable the Docker system service to start your containers on boot:
 
     sudo systemctl enable docker
 
+## Running the Docker network
+To get the network running, following commands need to be run from project's root, where docker-compose.yaml resides.  
+
+Build images:
+
+    docker-compose build
+
+Run the containers up:
+
+    docker-compose up
+
+To update your changes to the containers, you need to run the containers down:
+
+    docker-compose down
+
+Then repeat the process of building images and running containers up again.
+
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
