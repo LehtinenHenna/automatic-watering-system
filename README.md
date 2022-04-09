@@ -71,6 +71,10 @@ In case the mosquitto.service is active, stop it with:
 
     sudo systemctl stop mosquitto.service
 
+To view the output of a docker container:
+
+    docker logs <name of container> -f
+
 ## Creating a new Django model
 Make sure the changes are updated to the docker container by rebuilding the image and that the containers is up and running.  
 Then to move inside the django container from bash:  
