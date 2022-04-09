@@ -13,5 +13,4 @@ RUN pip install -r requirements.txt
 
 COPY . /django/
 
-RUN python manage.py makemigrations --no-input
 RUN python manage.py collectstatic --no-input
