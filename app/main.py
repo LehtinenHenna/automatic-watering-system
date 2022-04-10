@@ -1,3 +1,3 @@
 import os
 
-os.system('python3 app/store.py')
+os.system('python3 store.py')
