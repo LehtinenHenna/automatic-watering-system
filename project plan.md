@@ -35,6 +35,7 @@ https://components101.com/modules/soil-moisture-sensor-module
 
 ### Water pump
 hexagon is input, circle is output  
+blue is positive (anode), yellow is negative (cathode)
 
 ## Extra
 Ideas to develop the system in case we have extra time
