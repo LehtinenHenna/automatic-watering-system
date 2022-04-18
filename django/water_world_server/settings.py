@@ -32,6 +32,8 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
+# Allow POST requests to Django through Nginx proxy
+CSRF_TRUSTED_ORIGINS = ["http://localhost"]
 
 # Application definition
 
