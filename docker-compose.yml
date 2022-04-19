@@ -10,19 +10,6 @@ services:
     container_name: water_world_app
     command: python main.py
     restart: unless-stopped
-  
-  db:
-    volumes:
-      - db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    image: postgres:14.2-alpine
-    container_name: water_world_db
-    restart: unless-stopped
 
   django:
     build:
