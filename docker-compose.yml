@@ -10,19 +10,6 @@ services:
     container_name: water_world_app
     command: python main.py
     restart: unless-stopped
-  
-  db:
-    volumes:
-      - db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    image: postgres:14.2-alpine
-    container_name: water_world_db
-    restart: unless-stopped
 
   django:
     build:
@@ -32,13 +19,11 @@ services:
       - static:/static
     ports:
       - "8000:8000"
-    depends_on:
-      - db
     env_file:
       - .env
     image: django:water_world_gunicorn
     container_name: water_world_gunicorn_server
-    command: gunicorn water_world_server.wsgi:application --bind 0.0.0.0:8000
+    entrypoint: /django/entrypoint.sh
     restart: unless-stopped
   
   mqtt:
@@ -69,6 +54,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  db:
   static:
     
