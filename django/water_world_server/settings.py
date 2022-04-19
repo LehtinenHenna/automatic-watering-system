@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'water_world_server.wsgi.application'
 
 DATABASES = {
      'default': {
-         'ENGINE': 'djongo',
-         'NAME': 'waterworld',
+        'ENGINE': 'djongo',
+        'NAME': 'waterworld',
+        'ENFORCE_SCHEMA': True,
+        'CLIENT': {
+            'host': os.getenv('MONGODB_URI')
+        }  
      }
  }
 
