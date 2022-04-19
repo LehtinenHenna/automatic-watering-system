@@ -14,3 +14,5 @@ RUN pip install -r requirements.txt
 COPY . /django/
 
 RUN python manage.py collectstatic --no-input
+
+RUN chmod +x /django/entrypoint.sh
