@@ -1,0 +1,2 @@
+python store.py &
+python pump_control.py &
