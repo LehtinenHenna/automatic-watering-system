@@ -4,8 +4,8 @@ from django.views import generic
 from .models import Config
 
 
-class IndexView(generic.ListView):
-    template_name = "water_world/index.html"
+class ConfigView(generic.base.View):
+    template_name = "water_world/config.html"
     context_object_name = "config"
 
     def get_queryset(self):
