@@ -1,9 +1,15 @@
 from django.db import models
 
 class Config(models.Model):
+  class SystemMode(models.IntegerChoices):
+    SENSOR_MODE = 1
+    TIMER_MODE = 2
+
   enable_system = models.BooleanField("System on/off switch",)
-  liters_to_pump = models.FloatField("Liters pumped per pump activation",)
-  sensor_read_interval_hours = models.IntegerField("Sensor read interval in hours",)
+  system_mode = models.IntegerField(choices=SystemMode.choices)
+  seconds_to_pump = models.FloatField("Liters pumped per pump activation",)
+  sensor_read_interval_hours = models.FloatField("Sensor read interval in sensor mode (hours)",)
+  watering_interval_hours = models.FloatField("Watering interval in timer mode (hours)")
 
 
 class WaterPump(models.Model):
@@ -14,4 +20,4 @@ class WaterPump(models.Model):
 class Event(models.Model):
   message = models.TextField("Event message",)
   event_type = models.CharField("Event type", max_length=100)
-  event_time = models.DateTimeField("When the event happened",)
+  event_time = models.DateTimeField("Event timestamp",)
