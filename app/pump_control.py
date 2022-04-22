@@ -96,11 +96,13 @@ def main():
 
 			else: # system is turned off
 				# publish success event that system is off and sensor wasn't read
-				client.publish(topic='', payload=
+				client.publish(topic=host+'/database/write', payload=
 					json.dumps({
 					"table": "water_world_event",
 					"insert_dict": {
-						"message": "System is turned off"
+						"message": "System is turned off",
+						"event_type": "Success",
+						"event_time": datetime.now()
 					}}))
 			config_updated = False
 			sleep(600) # sleep 10 min
