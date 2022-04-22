@@ -6,6 +6,10 @@ services:
       context: ./app
     volumes:
       - ./app:/app
+    devices: 
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+      - "/dev/gpiomem:/dev/gpiomem"
     image: app:water_world
     container_name: water_world_app
     command: python main.py
