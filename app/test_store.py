@@ -1,4 +1,4 @@
-import store
+import app.store_deprecated as store_deprecated
 import pytest
 from unittest.mock import patch
 from unittest.mock import Mock
@@ -11,8 +11,8 @@ client = Mock()
 userdata = Mock()
 msg = Mock()
 load_dotenv()
-store.USER = os.getenv('USER')
-store.PASSWORD = os.getenv('PASSWORD')
+store_deprecated.USER = os.getenv('USER')
+store_deprecated.PASSWORD = os.getenv('PASSWORD')
 
 @patch('store.create_insert_query')
 @patch('store.psycopg2.connect')
@@ -25,4 +25,4 @@ def test_osError(mock_connect, mock_insert_query):
         "values": ["2012-03-19T07:22Z", "2012-03-19T07:23Z"]
     }).encode()
     with pytest.raises(OSError):
-        store.on_message(client=client, userdata=userdata, msg=msg)
+        store_deprecated.on_message(client=client, userdata=userdata, msg=msg)

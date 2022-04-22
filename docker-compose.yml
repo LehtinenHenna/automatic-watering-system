@@ -10,6 +10,8 @@ services:
     container_name: water_world_app
     command: python main.py
     restart: unless-stopped
+    env_file:
+      - .env
 
   django:
     build:
