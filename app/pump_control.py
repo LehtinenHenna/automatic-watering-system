@@ -1,8 +1,10 @@
 '''
 Controls a water pump according to the configuration variables fetched from the database.
-Reads a moisture sensor according to a given time interval. If the sensor returns 0, the soil is moist and
-nothing is done. If the sensor returns 1, the soil is dry and it the water pump gets turned on for a given
+If sensor_enable == True, reads a moisture sensor according to a given time interval. 
+If the sensor returns 0, the soil is moist and nothing happens. 
+If the sensor returns 1, the soil is dry and the water pump gets turned on for a given
 number of seconds. The pump start and stop timestamps get saved to the database.
+If sensor_enable == False, watering happens according to watering_interval_hours
 Saves event data to the database.
 Uses store.py to communicate with the database.
 '''
@@ -25,6 +27,7 @@ def setup_pins():
 
 
 def read_sensor(seconds_to_pump):
+	global client
 	GPIO.output(27, 1) # set sensor vcc on
 	sleep(1)
 	moisture = GPIO.input(17)
@@ -33,9 +36,18 @@ def read_sensor(seconds_to_pump):
 		print("ITS MOIST BABY")
 	elif moisture == 1:
 		print("DRY AS A DESERT")
-		print(f"Pump started: {datetime.now()}")
+		pump_activated = datetime.now()
+		print(f"Pump started: {pump_activated}")
 		activate_pump(seconds_to_pump)
-		print(f"Pump stopped: {datetime.now()}")
+		pump_stopped = datetime.now()
+		print(f"Pump stopped: {pump_stopped}")
+		client.publish(topic='', payload=
+			json.dumps({
+			"table": "water_world_waterpump",
+			"insert_dict": {
+				"pump_activated": pump_activated,
+				"pump_stopped": pump_stopped,
+			}}))
 	GPIO.output(27, 0) # set sensor vcc off
 
 
@@ -84,7 +96,12 @@ def main():
 
 			else: # system is turned off
 				# publish success event that system is off and sensor wasn't read
-				client.publish()
+				client.publish(topic='', payload=
+					json.dumps({
+					"table": "water_world_event",
+					"insert_dict": {
+						"message": "System is turned off"
+					}}))
 			config_updated = False
 			sleep(600) # sleep 10 min
 
