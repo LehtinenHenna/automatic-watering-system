@@ -61,8 +61,10 @@ def activate_pump(seconds_to_pump):
 	
 
 def main():
-	global host, client, enable_system, seconds_to_pump, sensor_read_interval_hours, enable_sensor, watering_interval_hours, config_updated
+	global host, client, enable_system, system_mode, seconds_to_pump, sensor_read_interval_hours, watering_interval_hours, config_updated
 	setup_pins()
+	sensor_mode = 1
+	timer_mode = 2
 	# initializing watering time to 72h from this moment and sensor reading to 1h from this moment
 	watering_timestamp = datetime.datetime.now() + datetime.timedelta(hours=72)
 	sensor_reading_timestamp = datetime.datetime.now() + datetime.timedelta(hours=1)
@@ -76,7 +78,7 @@ def main():
 		if config_updated == True: # if the query data came through
 			if enable_system == True: # if system is turned on
 
-				if enable_sensor == True: # if watering happens according to sensor reading
+				if system_mode == sensor_mode: # if watering happens according to sensor reading
 					if previous_sensor_interval != sensor_read_interval_hours:
 						# update sensor_reading_timestamp
 						time = datetime.datetime.now()
@@ -85,7 +87,7 @@ def main():
 						# it's time to read the sensor
 						read_sensor(seconds_to_pump)
 					
-				else: # if watering happens according to time interval
+				elif system_mode == timer_mode: # if watering happens according to time interval
 					if previous_watering_interval != watering_interval_hours:
 						# update watering_timestamp
 						time = datetime.datetime.now()
@@ -117,9 +119,15 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
 	global enable_system, seconds_to_pump, sensor_read_interval_hours, enable_sensor, watering_interval_hours, config_updated
 	# received data from database
-	data = msg.payload.decode()
-	print('data should be a list:', data)
-	enable_system, seconds_to_pump, sensor_read_interval_hours, enable_sensor, watering_interval_hours = data
+	data = json.loads(msg.payload.decode())
+	print('data should be a dict:', data)
+
+	enable_system = data['enable_system']
+	system_mode = data['system_mode']
+	seconds_to_pump = data['seconds_to_pump']
+	sensor_read_interval_hours = data['sensor_read_interval_hours']
+	watering_interval_hours = data['watering_interval_hours']
+
 	config_updated = True
 
 
@@ -132,14 +140,16 @@ if __name__ == "__main__":
 	client.on_connect = on_connect
 	client.on_message = on_message
 	client.connect('mqtt', 1883, 60)
-	# initializing config variables
-	enable_system = False
-	seconds_to_pump = 3
-	sensor_read_interval_hours = 1
-	enable_sensor = True
-	watering_interval_hours = 72
 
 	config_updated = False
+
+	# initializing config variables
+	enable_system = False
+	system_mode = 1
+	seconds_to_pump = 3
+	sensor_read_interval_hours = 1
+	watering_interval_hours = 72
+
 	# starts looping callback functions in a separate thread
 	client.loop_start()
 	main()
