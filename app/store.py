@@ -59,12 +59,12 @@ def on_message(client, userdata, msg):
             })
 
         elif 'query' in msg.topic:
-
+            print('data requested at', datetime.datetime.now())
             data = collection.find_one()
             
             if '_id' in data:
                 del data['_id']
-            print('data: ', data)
+            print('data: ', data, 'time: ', datetime.datetime.now())
 
             client.publish(topic = host + '/store/data', payload = json.dumps(data))
 
