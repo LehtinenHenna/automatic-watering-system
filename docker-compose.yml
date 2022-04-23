@@ -10,12 +10,12 @@ services:
       - "/dev/gpiochip0:/dev/gpiochip0"
       - "/dev/gpiochip1:/dev/gpiochip1"
       - "/dev/gpiomem:/dev/gpiomem"
+    env_file:
+      - .env
     image: app:water_world
     container_name: water_world_app
     command: python main.py
     restart: unless-stopped
-    env_file:
-      - .env
 
   django:
     build:
@@ -35,6 +35,7 @@ services:
   mqtt:
     build:
       context: ./mosquitto
+    user: ${UID}:${GID}
     volumes:
       - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/data:/mosquitto/data
@@ -42,6 +43,8 @@ services:
     ports:
       - "1883:1883"
       - "9001:9001"
+    env_file:
+      - .env
     image: mqtt:water_world_server
     container_name: water_world_mqtt_server
     restart: unless-stopped

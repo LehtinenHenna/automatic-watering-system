@@ -1,2 +1,6 @@
 # Env variables
 .env
+
+# MQTT persistence files
+mosquitto.db
+mosquitto.log
