@@ -51,7 +51,6 @@ def on_message(client, userdata, msg):
             print("data['insert_dict']", data['insert_dict'])
             insert_dict = data['insert_dict']
 
-            print('insertion:', insertion)
             #data['insert_dict']['_id'] = ObjectId()
             insertion = collection.insert_one(data['insert_dict'])
 
