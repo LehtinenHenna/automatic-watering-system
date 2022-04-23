@@ -51,11 +51,10 @@ def on_message(client, userdata, msg):
             print("data['insert_dict']", data['insert_dict'])
             insert_dict = data['insert_dict']
 
-            print('insertion:', insertion)
-            #data['insert_dict']['_id'] = ObjectId()
-            insertion = collection.insert_one(data['insert_dict'])
+            #insertion = collection.update_one(insert_dict, {'$set':insert_dict}, upsert=True)
+            insertion = collection.insert_one(insert_dict)
 
-            print('Successfully wrote point to database: ' + str(data['insert_dict']))
+            print('Successfully wrote point to database: ' + str(insert_dict))
 
             success_event_insertion = event_collection.insert_one({
                 'message': 'Successfully wrote point to database: ' + str(data['insert_dict']),
