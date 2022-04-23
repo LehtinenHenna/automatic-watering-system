@@ -15,6 +15,19 @@ class Config(models.Model):
     return "System Config"
 
 
+class Event(models.Model):
+  message = models.TextField("Event message",)
+  event_type = models.CharField("Event type", max_length=100)
+  event_time = models.DateTimeField("Event timestamp", primary_key=True,)
+
+  def __str__(self):
+    event_ts = self.event_time
+    if type(event_ts) == str:
+      return event_ts
+    else:
+      return event_ts.strftime("%c")
+    
+
 class WaterPump(models.Model):
   pump_activated = models.DateTimeField("Pump activation timestamp", primary_key=True,)
   pump_stopped = models.DateTimeField("Pump stopping timestamp",)
@@ -28,12 +41,3 @@ class WaterPump(models.Model):
       return activation_ts
     else:
       return activation_ts.strftime("%c")
-
-
-class Event(models.Model):
-  message = models.TextField("Event message",)
-  event_type = models.CharField("Event type", max_length=100)
-  event_time = models.DateTimeField("Event timestamp", primary_key=True,)
-
-  def __str__(self):
-    return self.message
