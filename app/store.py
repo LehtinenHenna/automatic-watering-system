@@ -53,12 +53,9 @@ def on_message(client, userdata, msg):
 
             # attempting to change isoformatted strings back to timestamps
             for key in insert_dict:
-                print("insert_dict[key]", insert_dict[key])
                 if type(insert_dict[key]) == str:
-                    print('type(insert_dict[key]) == str')
                     try:
                         insert_dict[key] = dateutil.parser.isoparse(insert_dict[key])
-                        print("insert_dict[key] after isoparse", insert_dict[key])
                     except:
                         print(format_exc)
                         continue
