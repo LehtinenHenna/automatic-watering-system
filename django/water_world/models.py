@@ -23,7 +23,11 @@ class WaterPump(models.Model):
     verbose_name_plural = "Pump activations"
 
   def __str__(self):
-    return self.pump_activated
+    activation_ts = self.pump_activated
+    if type(activation_ts) == str:
+      return activation_ts
+    else:
+      return activation_ts.strftime("%c")
 
 
 class Event(models.Model):
