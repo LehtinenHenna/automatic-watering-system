@@ -7,10 +7,14 @@
 </head>
 
 <body>
+  <p>Latest water pump actions:</p>
   {% if latest_actions %}
   <ul>
-    {% for action in latest_actions %}
-      <li>{{ action }}</li>
+    {% for waterpump in latest_actions %}
+      <li>
+        Water pump activated: {{ waterpump.pump_activated|date:"D d F Y H:i:s" }} - 
+        Water pump stopped: {{ waterpump.pump_stopped|date:"D d F Y H:i:s" }}
+      </li>
     {% endfor %}
   </ul>
   {% else %}

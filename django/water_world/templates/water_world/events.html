@@ -7,10 +7,11 @@
 </head>
 
 <body>
+  <p>Latest events:</p>
   {% if latest_events %}
   <ul>
     {% for event in latest_events %}
-      <li>{{ event }}</li>
+      <li>{{ event.event_time|date:"D d F Y H:i:s" }} - {{ event.event_type }} - {{ event.message }}</li>
     {% endfor %}
   </ul>
   {% else %}
