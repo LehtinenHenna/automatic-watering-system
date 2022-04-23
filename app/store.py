@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 import os
 from socket import gethostname
 from traceback import format_exc
-from bson.objectid import ObjectId
+import dateutil.parser
 
     
 
@@ -50,6 +50,15 @@ def on_message(client, userdata, msg):
         if 'write' in msg.topic:
             print("data['insert_dict']", data['insert_dict'])
             insert_dict = data['insert_dict']
+
+            # attempting to change isoformatted strings back to timestamps
+            for key in insert_dict:
+                if type(insert_dict[key]) == str:
+                    try:
+                        insert_dict[key] = dateutil.parser.isoparse(insert_dict[key])
+                    except:
+                        print(format_exc)
+                        continue
 
             insertion = collection.insert_one(insert_dict)
 
