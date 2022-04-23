@@ -45,6 +45,18 @@ Enable the Docker system service to start your containers on boot:
 
     sudo systemctl enable docker
 
+## Creating the .env file
+Before building and running the docker-compose, you need to set these variables in .env file at the projects root to correspond to your own settings.  
+
+    DJANGO_SUPERUSER_PASSWORD='<superuser password of your choice>'
+    DJANGO_SUPERUSER_EMAIL='<superuser email of your choice>'
+    DJANGO_SUPERUSER_USERNAME='<superuser username of your choice>'
+    SECRET_KEY='<your django secret key from the settings.py file>'
+    DEBUG="<desired debug mode True/False>"
+    MONGODB_URI=<mongodb+srv://<username>:<password>@<cluster>/<database>?retryWrites=true&w=majority>
+    UID='<your user id (run 'id -u' in bash)>'
+    GID='<your user group id (run 'id -g' in bash)>'
+
 ## Running the Docker network
 To get the network running, following commands need to be run from project's root, where docker-compose.yaml resides.  
 
