@@ -9,7 +9,7 @@ class EventView(generic.base.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['latest_events'] = Event.objects.all()[:30]
+        context['latest_events'] = Event.objects.all().order_by('-event_time')[:40]
         
         return context
 
@@ -19,6 +19,6 @@ class PumpView(generic.base.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['latest_actions'] = WaterPump.objects.all()[:30]
+        context['latest_actions'] = WaterPump.objects.all().order_by('-pump_activated')[:40]
         
         return context
