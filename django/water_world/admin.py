@@ -22,4 +22,8 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ("message", "event_type", "event_time")
 
 
-admin.site.register([Config, Event, WaterPump])
+@admin.register(WaterPump)
+class WaterPumpAdmin(admin.ModelAdmin):
+    list_display = ("pump_activated", "pump_stopped")
+
+admin.site.register([Config, Event])
