@@ -74,18 +74,9 @@ To update your changes to the containers, you need to run the containers down:
 
 Then repeat the process of building images and running containers up again.  
 
-Make sure to remove mosquitto/data/mosquitto.db and mosquitto/log/mosquitto.log before trying to build containers.  
-Also make sure that the MQTT port isn't already taken by mosquitto.service before running the containers up:  
-
-    systemctl status mosquitto.service
-
-In case the mosquitto.service is active, stop it with:  
-
-    sudo systemctl stop mosquitto.service
-
 To view the output of a docker container:
 
-    docker logs <name of container> -f
+    docker logs -f -n 20 <name of container>
 
 ## Creating a new Django model
 Make sure the changes are updated to the docker container by rebuilding the image and that the containers is up and running.  
