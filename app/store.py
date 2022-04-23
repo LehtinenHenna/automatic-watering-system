@@ -27,6 +27,8 @@ from dotenv import load_dotenv
 import os
 from socket import gethostname
 from traceback import format_exc
+from bson.objectid import ObjectId
+
     
 
 def on_connect(client, userdata, flags, rc):
@@ -46,14 +48,17 @@ def on_message(client, userdata, msg):
         event_collection = db['water_world_event']
 
         if 'write' in msg.topic:
+            print("data['insert_dict']", data['insert_dict'])
+            insert_dict = data['insert_dict']
 
+            print('insertion:', insertion)
+            #data['insert_dict']['_id'] = ObjectId()
             insertion = collection.insert_one(data['insert_dict'])
-            print(insertion)
 
-            print('Successfully wrote point to database: ' + str(insertion))
+            print('Successfully wrote point to database: ' + str(data['insert_dict']))
 
             success_event_insertion = event_collection.insert_one({
-                'message': 'Successfully wrote point to database: ' + str(insertion),
+                'message': 'Successfully wrote point to database: ' + str(data['insert_dict']),
                 'event_type': 'Success',
                 'event_time': datetime.datetime.now()
             })
@@ -79,7 +84,7 @@ def on_message(client, userdata, msg):
 
     except Exception:
         event_collection = db['water_world_event']
-        os_error_insertion = event_collection.insert_one({
+        error_insertion = event_collection.insert_one({
                 'message': 'Exception occured: ' + format_exc(),
                 'event_type': 'Warning',
                 'event_time': datetime.datetime.now()
