@@ -12,7 +12,7 @@ services:
       - "/dev/gpiomem:/dev/gpiomem"
     image: app:water_world
     container_name: water_world_app
-    command: python main.py
+    command: ./wrapper_script.sh
     restart: unless-stopped
     env_file:
       - .env
