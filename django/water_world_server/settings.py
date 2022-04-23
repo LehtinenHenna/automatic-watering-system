@@ -85,7 +85,7 @@ DATABASES = {
      'default': {
         'ENGINE': 'djongo',
         'NAME': 'waterworld',
-        'ENFORCE_SCHEMA': False,
+        'ENFORCE_SCHEMA': True,
         'CLIENT': {
             'host': os.getenv('MONGODB_URI')
         }  
