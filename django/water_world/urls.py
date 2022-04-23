@@ -8,5 +8,6 @@ from . import views
 app_name = "water_world"
 
 urlpatterns = [
-    path("config/", views.ConfigView.as_view(), name="config"),
+    path('events/', views.EventView.as_view(), name='events'),
+    path('pump/', views.PumpView.as_view(), name='pump'),
 ]

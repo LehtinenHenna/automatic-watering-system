@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Events</title>
+</head>
+
+<body>
+  <p>Latest events:</p>
+  {% if latest_events %}
+  <ul>
+    {% for event in latest_events %}
+      <li>{{ event.event_time|date:"D d F Y H:i:s" }} - {{ event.event_type }} - {{ event.message }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    No events
+  {% endif %}
+</body>
+
+</html>

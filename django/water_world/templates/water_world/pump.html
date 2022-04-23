@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Water pump actions</title>
+</head>
+
+<body>
+  <p>Latest water pump actions:</p>
+  {% if latest_actions %}
+  <ul>
+    {% for waterpump in latest_actions %}
+      <li>
+        Water pump activated: {{ waterpump.pump_activated|date:"D d F Y H:i:s" }} - 
+        Water pump stopped: {{ waterpump.pump_stopped|date:"D d F Y H:i:s" }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    No water pump activity
+  {% endif %}
+</body>
+
+</html>
