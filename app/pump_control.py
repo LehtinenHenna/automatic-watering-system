@@ -19,6 +19,20 @@ import json
 from traceback import format_exc
 
 
+class GracefulShutdown:
+    """
+	Override termination signals behaviour to
+	clean gpio pin setup on program exit.
+	"""
+    def __init__(self):
+        self.shutdown_now = False
+        signal.signal(signal.SIGINT, self.shutdown())
+        signal.signal(signal.SIGTERM, self.shutdown())
+
+    def shutdown(self, signum, frame):
+        self.shutdown_now = True
+
+
 def setup_pins():
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(17, GPIO.IN)  # Sensor input
@@ -104,7 +118,15 @@ def main():
 		previous_watering_interval = 0
 		previous_sensor_interval = 0
 
+		shutdown_handler = GracefulShutdown()
+
 		while True:
+			if shutdown_handler.shutdown_now:
+				print("Shutting down gracefully...")
+				GPIO.cleanup()
+				print("GPIO pin setups cleaned")
+				break
+
 			# make a query to get data from table water_world_config and wait for the results
 			client.publish(topic=host+'/database/query', payload=json.dumps({"table": "water_world_config"}))
 			sleep(3)
